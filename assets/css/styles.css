@@ -230,6 +230,7 @@ select {
   -webkit-appearance: none;
 }
 
+
 /* ====== Header ====== */
 .header {
   background: #494d55;
@@ -1196,6 +1197,24 @@ select {
 .footer p{
   margin: 0px;
 }
+
+
+
+/*============= Section css =============*/
+
+p code span{
+  color:#FC6A31;
+}
+
+
+
+
+
+
+
+
+
+
 
 @media (max-width: 575.98px) {
   .main-search-box {

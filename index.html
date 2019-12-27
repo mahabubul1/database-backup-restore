@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title> database  documentation</title>
+    <title> database backup restore</title>
     <!-- Meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,6 +13,7 @@
     <script defer src="https://use.fontawesome.com/releases/v5.8.2/js/all.js" integrity="sha384-DJ25uNYET2XCl5ZF++U8eNxPWqcKohUUBUpKGlNLMchM7q4Wjg2CUpjHLaL8yYPH" crossorigin="anonymous"></script>
     <!-- Global CSS -->
     <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">   
+    <link rel="stylesheet" href="assets/plugins/prism/prism.css">
     <!-- Theme CSS -->
     <link id="theme-style" rel="stylesheet" href="assets/css/styles.css">
     
@@ -24,7 +25,7 @@
         <header id="header" class="header">
             <div class="container">
                 <div id="doc-header" class="doc-header text-center">
-                    <h1 class="doc-title"> Database Management Documentation</h1>
+                    <h1 class="doc-title"> Database Backup Restore Documentation</h1>
                 </div><!--//doc-header-->
             </div><!--//container-->
         </header><!--//header-->
@@ -37,12 +38,31 @@
                     <div id="doc-nav" class="doc-nav">
                         <nav id="doc-menu" class="nav doc-menu flex-column sticky">
                             <a class="nav-link scrollto" href="#installation-section">Installation</a>
-                            <nav class="doc-sub-menu nav flex-column">
-                                <a class="nav-link scrollto" href="#step1">Step One</a>
-                                <a class="nav-link scrollto" href="#step2">Step Two</a>
-                                <a class="nav-link scrollto" href="#step3">Step Three</a>
-                            </nav><!--//nav-->
-                            <a class="nav-link scrollto" href="#video-section">Video</a>
+                            <a class="nav-link scrollto" href="#mysql-section">Mysql
+                                <nav class="doc-sub-menu nav flex-column">
+                                    <a class="nav-link scrollto" href="#my_dump">Dump</a>
+                                    <a class="nav-link scrollto" href="#my_restore">Restore </a>
+                                </nav><!--//nav-->
+                            </a>
+                            <a class="nav-link scrollto" href="#pgsql-section">pgsql
+                                 <nav class="doc-sub-menu nav flex-column">
+                                    <a class="nav-link scrollto" href="#pgsql_dump">Dump</a>
+                                    <a class="nav-link scrollto" href="#pgsql_restore">Restore </a>
+                                </nav><!--//nav-->
+                            </a>
+                            <a class="nav-link scrollto" href="#sqlite-section">Sqlite
+                                 <nav class="doc-sub-menu nav flex-column">
+                                    <a class="nav-link scrollto" href="#sqlite_dump">Dump</a>
+                                    <a class="nav-link scrollto" href="#sqlite_restore">Restore </a>
+                                </nav><!--//nav-->
+
+                            </a>
+                            <a class="nav-link scrollto" href="#mongodb-section">Mongodb
+                                <nav class="doc-sub-menu nav flex-column">
+                                    <a class="nav-link scrollto" href="#mongodb_dump">Dump</a>
+                                    <a class="nav-link scrollto" href="#mongodb_restore">Restore </a>
+                                </nav><!--//nav-->
+                            </a>
                         </nav><!--//doc-menu-->
                     </div>
                 </div>
@@ -54,72 +74,588 @@
                     <div class="content-inner">
                         <section id="installation-section" class="doc-section">
                             <h2 class="section-title">Installation</h2>
-                            <div id="step1"  class="section-block">
-                                <h3 class="block-title">Step One</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis.
-                                </p>
-                                <div class="code-block">
-                                    <h6>Default code example:</h6>
-                                    <p><code>bower install &lt;package&gt;</code></p>
-                                    <p><code>npm install &lt;package&gt;</code></p>
+                            <div id="step3"  class="section-block">
+                                <p><code> composer require codexshaper/database-backup-restore</code></p>
+                            </div><!--//section-block-->
+                        </section><!--//doc-section-->
+                        <section id="mysql-section" class="doc-section"><!--=============== mysql-section Start ===============-->
+                            <h2 class="section-title">Mysql</h2>
+
+                            <!--=================== my_dump  Start ===================-->
+
+                            <div id="my_dump"  class="section-block">
+                                <h3 class="block-title">Dump</h3>
+                                <p> <code>Mustbe installed mysqldump in your system <span>*</span></code>      </p>
+                                <div class="code-block" > 
+                                 <pre><code class="language-php">
+&lt;?php 
+
+$options    = [
+    'host'            => 'HOST',
+    'port'            => 'PORT',
+    'dbName'          => 'DATABASE_NAME',
+    'username'        => 'DATABASE_USERNAME',
+    'password'        => 'DATABASE_PASSWORD',
+    'destinationPath' => 'STORAGE_PATH_WITH_FILE_NAME', // /path/to/backups/mysql/dump
+];
+
+?&gt;
+                                   </code></pre>
+                                </div><!--//code-block-->
+                                 <div class="code-block">
+                                    <h6>Use constructor with options</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+$dumper = new \CodexShaper\Dumper\Drivers\MysqlDumper($options);
+$dumper->dump();
+
+?&gt;
+                                    </code></pre>
+                                </div><!--//code-block-->
+                               <div class="code-block">
+                                    <h6>Use create method</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+\CodexShaper\Dumper\Drivers\MysqlDumper::create($options)->dump();
+
+?&gt;
+                                      </code>
+                                   </pre>
+                                </div><!--//code-block-->
+                               <div class="code-block">
+                                    <h6>Dynamically</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+\CodexShaper\Dumper\Drivers\MysqlDumper::create()
+  ->setHost($host)
+  ->setPort($port)
+  ->setDbName($database)
+  ->setUserName($username)
+  ->setPassword($password)
+  ->setDestinationPath($destinationPath)
+  ->dump();
+
+?&gt;
+                                      </code>
+                                   </pre>
+                                </div><!--//code-block-->
+                               <div class="code-block">
+                                    <h6>Archive</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+\CodexShaper\Dumper\Drivers\MysqlDumper::create($options)
+  ->useCompress("gzip") // This command apply gzip to zip
+  ->dump();
+
+?&gt;
+                                      </code>
+                                   </pre>
                                 </div><!--//code-block-->
                             </div><!--//section-block-->
-                            <div id="step2"  class="section-block">
-                                <h3 class="block-title">Step Two</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
-                                </p>
-                                <div class="row">
-                                    <div class="col-md-6 col-12">
-                                        <h6>Un-ordered list example</h6>
-                                        <ul class="list">
-    										<li>Lorem ipsum dolor sit amet.</li>
-    										<li>Aliquam tincidunt mauris.</li>
-    										<li>Ultricies eget vel aliquam libero.
-    											<ul>
-    												<li>Turpis pulvinar</li>
-    												<li>Feugiat scelerisque</li>
-    												<li>Ut tincidunt</li>
-    											</ul>
-    										</li>
-    										<li>Pellentesque habitant morbi.</li>
-    										<li>Praesent dapibus, neque id.</li>
-    									</ul>
-                                    </div>
-                                    <div class="col-md-6 col-12">
-                                        <h6>Ordered list example</h6>
-                                        <ol class="list">
-    										<li>Lorem ipsum dolor sit amet.</li>
-    										<li>Aliquam tincidunt mauris.</li>
-    										<li>Ultricies eget vel aliquam libero.
-    											<ul>
-    												<li>Turpis pulvinar</li>
-    												<li>Feugiat scelerisque</li>
-    												<li>Ut tincidunt</li>
-    											</ul>
-    										</li>
-    										<li>Pellentesque habitant morbi.</li>
-    										<li>Praesent dapibus, neque id.</li>
-    									</ol>
-                                    </div>
-                                </div><!--//row-->
+                           <!--=================== my_dump  End ===================-->
+
+                            <!--=================== my_restore  Start ===================-->
+
+                            <div id="my_restore"  class="section-block">
+                                <h3 class="block-title">Restore</h3>
+                                <p> <code>Mustbe installed mysql in your system <span>*</span></code></p>
+                                 <div class="code-block">
+                                    <h6>Restore from without archive</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+$dumper = new \CodexShaper\Dumper\Drivers\MysqlDumper($options);
+$dumper->setRestorePath($restorePath); // /path/to/backups/mysql/dump.sql 
+$dumper->restore();
+?&gt;
+                                    </code></pre>
+                                </div><!--//code-block-->
+                               <div class="code-block">
+                                    <h6>Restore from archive</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+\CodexShaper\Dumper\Drivers\MysqlDumper::create($options)
+  ->useCompress("gunzip") // this command unzip the file
+  ->setRestorePath($restorePath) // /path/to/backups/mysql/dump.sql.gz
+  ->restore();
+
+?&gt;
+                                      </code>
+                                   </pre>
+                                </div><!--//code-block-->
                             </div><!--//section-block-->
-                            <div id="step3"  class="section-block">
-                                <h3 class="block-title">Step Three</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis.
-                                </p>
+                           <!--=================== my_restore  End ===================-->
+                        </section> <!--=============== mysql-section End ===============-->
+
+                        <section id="pgsql-section" class="doc-section"><!--=============== pgsql-section Start ===============-->
+                            <h2 class="section-title">Pgsql</h2>
+
+                            <!--=================== pgsql_dump  Start ===================-->
+
+                            <div id="pgsql_dump"  class="section-block">
+                                <h3 class="block-title">Dump</h3>
+                                <p> <code>Mustbe installed pg_dump in your system <span>*</span></code>      </p>
+                                <div class="code-block" > 
+                                 <pre><code class="language-php">
+&lt;?php 
+
+$options    = [
+    'host'            => 'HOST',
+    'port'            => 'PORT',
+    'dbName'          => 'DATABASE_NAME',
+    'username'        => 'DATABASE_USERNAME',
+    'password'        => 'DATABASE_PASSWORD',
+    'destinationPath' => 'STORAGE_PATH_WITH_FILE_NAME', // /path/to/backups/pgsql/dump
+];
+
+?&gt;
+                                   </code></pre>
+                                </div><!--//code-block-->
+                                 <div class="code-block">
+                                    <h6>Use constructor with options</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+$dumper = new \CodexShaper\Dumper\Drivers\PgsqlDumper($options);
+$dumper->dump();
+
+?&gt;
+                                    </code></pre>
+                                </div><!--//code-block-->
+                               <div class="code-block">
+                                    <h6>Use create method</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+\CodexShaper\Dumper\Drivers\PgsqlDumper::create($options)->dump();
+
+?&gt;
+                                      </code>
+                                   </pre>
+                                </div><!--//code-block-->
+                               <div class="code-block">
+                                    <h6>Dynamically</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+\CodexShaper\Dumper\Drivers\PgsqlDumper::create()
+  ->setHost($host)
+  ->setPort($port)
+  ->setDbName($database)
+  ->setUserName($username)
+  ->setPassword($password)
+  ->setDestinationPath($destinationPath)
+  ->dump();
+
+?&gt;
+                                      </code>
+                                   </pre>
+                                </div><!--//code-block-->
+                               <div class="code-block">
+                                    <h6>Archive</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+\CodexShaper\Dumper\Drivers\PgsqlDumper::create($options)
+  ->useCompress("gzip") // This command apply gzip to zip
+  ->dump();
+
+?&gt;
+                                      </code>
+                                   </pre>
+                                </div><!--//code-block-->
                             </div><!--//section-block-->
-                        </section><!--//doc-section-->
-                        <section id="video-section" class="doc-section">
-                            <h2 class="section-title">Video</h2>
-                            <div class="section-block">
-                                <div class="embed-responsive embed-responsive-16by9">
-                                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/ejBkOjEG6F0?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
-                                </div>
-                            </div>
-                        </section><!--//doc-section-->
+                           <!--=================== pgsql_dump  End ===================-->
+
+                            <!--=================== pgsql_restore  Start ===================-->
+
+                            <div id="pgsql_restore"  class="section-block">
+                                <h3 class="block-title">Restore</h3>
+                                <p> <code>Mustbe installed psql in your system <span>*</span></code></p>
+                                 <div class="code-block">
+                                    <h6>Restore from without archive</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+$dumper = new \CodexShaper\Dumper\Drivers\PgsqlDumper($options);
+$dumper->setRestorePath($restorePath); // /path/to/backups/pgsql/dump.sql 
+$dumper->restore();
+?&gt;
+                                    </code></pre>
+                                </div><!--//code-block-->
+                                <div class="code-block">
+                                    <h6>Restore from archive</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+\CodexShaper\Dumper\Drivers\PgsqlDumper::create($options)
+  ->useCompress("gunzip") // this command unzip the file
+  ->setRestorePath($restorePath) // /path/to/backups/pgsql/dump.sql.gz
+  ->restore();
+
+?&gt;
+                                      </code>
+                                   </pre>
+                                </div><!--//code-block-->
+                            </div><!--//section-block-->
+                           <!--=================== pgsql_restore  End ===================-->
+
+                        </section> <!--=============== pgsql-section End ===============-->
+
+                        <section id="sqlite-section" class="doc-section"><!--=============== sqlite-section Start ===============-->
+                            <h2 class="section-title">Sqlite</h2>
+
+                            <!--=================== sqlite_dump  Start ===================-->
+
+                            <div id="sqlite_dump"  class="section-block">
+                                <h3 class="block-title">Dump</h3>
+                                <p> <code>Mustbe installed sqlite3 in your system <span>*</span></code>      </p>
+                                <div class="code-block" > 
+                                 <pre><code class="language-php">
+&lt;?php 
+
+$options    = [
+    'dbName'          => 'DATABASE_PATH', // /path/to/database.sqlite
+    'destinationPath' => 'STORAGE_PATH_WITH_FILE_NAME', // /path/to/backups/sqlite/dump.sql
+];
+
+?&gt;
+                                   </code></pre>
+                                </div><!--//code-block-->
+                                 <div class="code-block">
+                                    <h6>Use constructor with options</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+$dumper = new \CodexShaper\Dumper\Drivers\SqliteDumper($options);
+$dumper->dump();
+
+?&gt;
+                                    </code></pre>
+                                </div><!--//code-block-->
+                               <div class="code-block">
+                                    <h6>Use create method</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+\CodexShaper\Dumper\Drivers\SqliteDumper::create($options)->dump();
+
+?&gt;
+                                      </code>
+                                   </pre>
+                                </div><!--//code-block-->
+                               <div class="code-block">
+                                    <h6>Dynamically</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+\CodexShaper\Dumper\Drivers\SqliteDumper::create()
+  ->setDbName($database)
+  ->setDestinationPath($destinationPath)
+  ->dump();
+
+?&gt;
+                                      </code>
+                                   </pre>
+                                </div><!--//code-block-->
+                               <div class="code-block">
+                                    <h6>Archive</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+\CodexShaper\Dumper\Drivers\SqliteDumper::create()
+  ->setDbName($database)
+  ->setDestinationPath($destinationPath)
+  ->useCompress("gzip") // This command apply gzip to zip
+  ->dump();
+
+?&gt;
+                                      </code>
+                                   </pre>
+                                </div><!--//code-block-->
+                            </div><!--//section-block-->
+                           <!--=================== sqlite_dump  End ===================-->
+
+                            <!--=================== sqlite_restore  Start ===================-->
+
+                            <div id="sqlite_restore"  class="section-block">
+                                <h3 class="block-title">Restore</h3>
+                                <p> <code>Mustbe installed sqlite3 in your system <span>*</span></code></p>
+                                 <div class="code-block">
+                                    <pre><code class="language-php">
+&lt;?php  
+
+$options    = [
+    'dbName'          => 'DATABASE_PATH', // /path/to/database.sqlite
+    'restorePath' => 'RESTORE_PATH_WITH_FILE_NAME', // /path/to/backups/sqlite/dump.sql
+];
+?&gt;
+                                    </code></pre>
+                                </div><!--//code-block-->
+
+                                <div class="code-block">
+                                    <h6>Use Construct</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+$dumper = new \CodexShaper\Dumper\Drivers\SqliteDumper($options);
+$dumper->restore();
+?&gt;
+                                    </code></pre>
+                                </div><!--//code-block-->
+
+                                <div class="code-block">
+                                    <h6>Use Dynamic</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+$dumper = new \CodexShaper\Dumper\Drivers\SqliteDumper($options);
+$dumper->restore();
+?&gt;
+                                    </code></pre>
+                                </div><!--//code-block-->              
+
+                               <div class="code-block">
+                                    <h6>Restore from archive</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+\CodexShaper\Dumper\Drivers\SqliteDumper::create()
+  ->setDbName($database)
+  ->setRestorePath($restorePath)
+  ->useCompress("gunzip") // This command apply gzip to zip
+  ->restore();
+
+?&gt;
+                                      </code>
+                                   </pre>
+                                </div><!--//code-block-->
+                            </div><!--//section-block-->
+                           <!--=================== sqlite_restore  End ===================-->
+                        </section> <!--=============== sqlite-section End ===============-->
+
+
+
+
+
+
+
+
+
+
+
+
+                        <section id="mongodb-section" class="doc-section"><!--=============== mangodb-section Start ===============-->
+                            <h2 class="section-title">Mongodb</h2>
+
+                            <!--=================== mongodb_dump  Start ===================-->
+
+                            <div id="mongodb_dump"  class="section-block">
+                                <h3 class="block-title">Dump</h3>
+                                <p> <code>Mustbe installed mongodump in your system <span>*</span></code>      </p>
+                                <div class="code-block" > 
+                                 <pre><code class="language-php">
+&lt;?php 
+
+$options    = [
+    'host'            => 'HOST',
+    'port'            => 'PORT',
+    'dbName'          => 'DATABASE_NAME',
+    'username'        => 'DATABASE_USERNAME',
+    'password'        => 'DATABASE_PASSWORD',
+    'destinationPath' => 'STORAGE_PATH_WITH_FILE_NAME', // /path/to/backups/mongodb/dump
+];
+
+?&gt;
+                                   </code></pre>
+                                </div><!--//code-block-->
+                                 <div class="code-block">
+                                    <h6>Use constructor with options</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+$dumper = new \CodexShaper\Dumper\Drivers\MongoDumper($options);
+$dumper->dump();
+
+?&gt;
+                                    </code></pre>
+                                </div><!--//code-block-->
+                               <div class="code-block">
+                                    <h6>Use create method</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+\CodexShaper\Dumper\Drivers\MongoDumper::create($options)->dump();
+
+?&gt;
+                                      </code>
+                                   </pre>
+                                </div><!--//code-block-->
+                               <div class="code-block">
+                                    <h6>Dynamically</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+\CodexShaper\Dumper\Drivers\MongoDumper::create()
+  ->setHost($host)
+  ->setPort($port)
+  ->setDbName($database)
+  ->setUserName($username)
+  ->setPassword($password)
+  ->setDestinationPath($destinationPath)
+  ->dump();
+
+?&gt;
+                                      </code>
+                                   </pre>
+                                </div><!--//code-block-->
+                               <div class="code-block">
+                                    <h6>Archive</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+\CodexShaper\Dumper\Drivers\MongoDumper::create($options)
+  ->useCompress("gzip") // This command will add --archive with --gzip
+  ->dump();
+
+?&gt;
+                                      </code>
+                                   </pre>
+                                </div><!--//code-block--> 
+                                <div class="code-block">
+                                     <h3 class="block-title">Use URI</h3>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+$options = [
+    'uri'             => $uri,
+    "destinationPath" => $destinationPath, // /path/to/backups/mongodb/dump 
+];
+$dumper = new \CodexShaper\Dumper\Drivers\MongoDumper($options);
+$dumper->dump();
+
+?&gt;
+                                      </code>
+                                   </pre>
+                                </div><!--//code-block-->
+                                <div class="code-block">
+                                     <h6>OR</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+\CodexShaper\Dumper\Drivers\MongoDumper::create(['uri' => $uri])
+  ->setDestinationPath($destinationPath)
+  ->dump()
+
+?&gt;
+                                      </code>
+                                   </pre>
+                                </div><!--//code-block-->
+                                <div class="code-block">
+                                     <h6>Dynamic</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+\CodexShaper\Dumper\Drivers\MongoDumper::create()
+  ->setUri($uri)
+  ->setDestinationPath($destinationPath)
+  ->dump()
+
+?&gt;
+                                      </code>
+                                   </pre>
+                                </div><!--//code-block-->
+                                <div class="code-block">
+                                     <h6>Compress</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+\CodexShaper\Dumper\Drivers\MongoDumper::create(['uri' => $uri])
+  ->useCompress("gzip")
+  ->setDestinationPath($destinationPath)
+  ->dump();
+
+?&gt;
+                                      </code>
+                                   </pre>
+                                </div><!--//code-block-->
+
+
+
+
+                            </div><!--//section-block-->
+                           <!--=================== mongodb_dump  End ===================-->
+
+                            <!--=================== mongodb_restore  Start ===================-->
+
+                            <div id="mongodb_restore"  class="section-block">
+                                <h3 class="block-title">Restore</h3>
+                                <p> <code>Mustbe installed mongorestore in your system <span>*</span></code></p>
+                                 <div class="code-block">
+                                    <h6>Restore from without archive</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+$dumper = new \CodexShaper\Dumper\Drivers\MongoDumper($options);
+$dumper->setRestorePath($restorePath); // /path/to/backups/mongodb/dump 
+$dumper->restore();
+?&gt;
+                                    </code></pre>
+                                </div><!--//code-block-->
+                               <div class="code-block">
+                                    <h6>Restore from archive</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+\CodexShaper\Dumper\Drivers\MongoDumper::create($options)
+  ->useCompress("gzip")
+  ->setRestorePath($restorePath) // /path/to/backups/mongodb/dump.gz
+  ->restore();
+
+?&gt;
+                                      </code>
+                                   </pre>
+                                </div><!--//code-block-->
+                                <div class="code-block">
+                                    <h6>Use URI</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+\CodexShaper\Dumper\Drivers\MongoDumper::create(['uri' => $uri])
+    ->setRestorePath($restorePath)
+    ->restore();
+
+?&gt;
+                                      </code>
+                                   </pre>
+                                </div><!--//code-block-->
+
+                                <div class="code-block">
+                                    <h6>Restore from archive using URI</h6>
+                                    <pre><code class="language-php">
+&lt;?php  
+
+\CodexShaper\Dumper\Drivers\MongoDumper::create(['uri' => $uri])
+  ->useCompress("gzip")
+  ->setRestorePath($restorePath)
+  ->restore();
+
+?&gt;
+                                      </code>
+                                   </pre>
+                                </div><!--//code-block-->
+                            </div><!--//section-block-->
+                           <!--=================== mongodb_restore  End ===================-->
+
+                        </section> <!--=============== mongodb-section End ===============-->
                     </div><!--//content-inner-->
                 </div>
-                    <!--================== doc-content  Start =================== -->
+                <!--================== doc-content  Start =================== -->
             </div><!--//doc-body-->              
         </div><!--//container-->
     </div><!--//doc-wrapper-->
@@ -136,8 +672,9 @@
 <!-- Main Javascript -->          
 <script type="text/javascript" src="assets/plugins/jquery-3.3.1.min.js"></script>
 <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+ <script type="text/javascript" src="assets/plugins/prism/prism.js"></script>    
 <script type="text/javascript" src="assets/plugins/jquery-scrollTo/jquery.scrollTo.min.js"></script>      
-<script type="text/javascript" src="assets/plugins/stickyfill/dist/stickyfill.min.js"></script>                                                             
+<script type="text/javascript" src="assets/plugins/stickyfill/dist/stickyfill.min.js"></script>                                                                                                                    
 <script type="text/javascript" src="assets/js/main.js"></script>
 </body>
 </html> 
