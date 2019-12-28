@@ -52,7 +52,6 @@ a:focus {
 }
 
 code {
-  background: #222;
   color: #fff;
   font-size: 14px;
   font-weight: bold;
@@ -72,6 +71,16 @@ code {
   line-height: 1.5;
 }
 
+.block{
+  background: #dcd9d9;
+  padding: 10px 30px;
+  font-size: 15px;
+  border-radius: 5px;
+}
+.block span{
+    color: #FC6A31;
+    font-weight: 700;
+}
 .btn .svg-inline--fa, a.btn .svg-inline--fa {
   margin-right: 5px;
   position: relative;
@@ -468,11 +477,6 @@ select {
   color: #a2a6af;
 }
 
-.doc-section {
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
-
 .doc-section .section-title {
   font-size: 26px;
   margin-top: 0;
@@ -511,12 +515,10 @@ select {
   font-size: 14px;
   font-weight: bold;
 }
-
 .section-block {
   padding-top: 15px;
   padding-bottom: 15px;
 }
-
 .section-block .block-title {
   margin-top: 0;
 }
@@ -570,12 +572,10 @@ select {
 .answer {
   color: #616670;
 }
-
 .code-block {
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
-
 .callout-block {
   padding: 30px;
   -webkit-border-radius: 4px;
@@ -1008,25 +1008,7 @@ select {
   color: #8A40A7;
 }
 
-/*
-.affix-top {
-  position: absolute;
-  top: 15px;
-}
 
-.affix {
-  top: 15px;
-}
-
-.affix, 
-.affix-bottom {
-  width: 230px;
-}
-
-.affix-bottom {
-  position: absolute;
-}
-*/
 /* ===== Promo block ===== */
 .promo-block {
   background: #3aa7aa;
@@ -1156,6 +1138,20 @@ select {
   color: #fff !important;
 }
 
+.f-name{
+   color: #ff0000;
+}
+span.return {
+    color: #dc3545;
+}
+#functions-section .section-title{
+  font-size: 16px;
+}
+#functions-section .fun-info{
+  font-size: 15px;
+  padding-top: 10px;
+}
+
 /* Extra small devices (phones, less than 768px) */
 @media (max-width: 767px) {
   .jumbotron {
@@ -1201,7 +1197,10 @@ select {
 
 
 /*============= Section css =============*/
-
+.doc-sidebar {
+    overflow-y: scroll;
+    height: 1000px;
+}
 p code span{
   color:#FC6A31;
 }
