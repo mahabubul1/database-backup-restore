@@ -1144,12 +1144,28 @@ select {
 span.return {
     color: #dc3545;
 }
+
+#functions-section .section-block {
+   padding-bottom: 0px;
+   padding-top: 10px;
+}
+
 #functions-section .section-title{
-  font-size: 16px;
+  font-size: 15px;
 }
 #functions-section .fun-info{
-  font-size: 15px;
+  font-size: 14px;
   padding-top: 10px;
+}
+
+/*============= Section css =============*/
+
+.doc-sidebar {
+    overflow-y: scroll;
+    height: 1000px;
+}
+p code span{
+  color:#FC6A31;
 }
 
 /* Extra small devices (phones, less than 768px) */
@@ -1193,27 +1209,6 @@ span.return {
 .footer p{
   margin: 0px;
 }
-
-
-
-/*============= Section css =============*/
-.doc-sidebar {
-    overflow-y: scroll;
-    height: 1000px;
-}
-p code span{
-  color:#FC6A31;
-}
-
-
-
-
-
-
-
-
-
-
 
 @media (max-width: 575.98px) {
   .main-search-box {
